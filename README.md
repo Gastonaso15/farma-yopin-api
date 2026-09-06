@@ -1,4 +1,4 @@
-# FarmaYopin API 💊📱
+# FarmaYopin API
 
 Backend REST para la aplicación móvil **FarmaYopin**, desarrollado en **Spring Boot** con **Spring Security**, **JPA / Hibernate**, autenticación **JWT** y persistencia en **MySQL** corriendo en Docker.
 
@@ -6,7 +6,7 @@ Desarrollado bajo la metodología **Test-Driven Development (TDD)** con cobertur
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+## Tecnologías Utilizadas
 
 - **Java 21**
 - **Spring Boot 4.x / 3.x**
@@ -19,7 +19,7 @@ Desarrollado bajo la metodología **Test-Driven Development (TDD)** con cobertur
 
 ---
 
-## 📋 Arquitectura y Roles
+## Arquitectura y Roles
 
 La API está diseñada para dar soporte a dos tipos de usuarios:
 
@@ -29,7 +29,7 @@ La API está diseñada para dar soporte a dos tipos de usuarios:
 
 ---
 
-## 🚀 Puesta en Marcha
+## Puesta en Marcha
 
 ### 1. Prerrequisitos
 - **Java 21** (o superior)
@@ -56,9 +56,9 @@ La API estará disponible en: `http://localhost:8080`
 
 ---
 
-## 📖 Documentación de Endpoints
+## Documentación de Endpoints
 
-### 🔐 1. Autenticación (`/api/auth`)
+### 1. Autenticación (`/api/auth`)
 
 | Método | Endpoint | Rol Requerido | Descripción |
 |---|---|---|---|
@@ -105,7 +105,7 @@ La API estará disponible en: `http://localhost:8080`
 
 ---
 
-### 📦 2. Catálogo de Productos (`/api/productos`)
+### 2. Catálogo de Productos (`/api/productos`)
 
 > Todas las peticiones requieren la cabecera: `Authorization: Bearer <token>`
 
@@ -145,7 +145,7 @@ La API estará disponible en: `http://localhost:8080`
 
 ---
 
-### 🛒 3. Carrito de Compras (`/api/carrito`)
+### 3. Carrito de Compras (`/api/carrito`)
 
 > Endpoints exclusivos para **Cliente** (`ROLE_CLIENTE`). Requieren `Authorization: Bearer <token>`.
 
@@ -186,7 +186,7 @@ La API estará disponible en: `http://localhost:8080`
 
 ---
 
-### 🧾 4. Histórico de Compras (`/api/compras`)
+### 4. Histórico de Compras (`/api/compras`)
 
 > Endpoint exclusivo para **Cliente** (`ROLE_CLIENTE`). Requiere `Authorization: Bearer <token>`.
 
@@ -219,7 +219,7 @@ La API estará disponible en: `http://localhost:8080`
 
 ---
 
-## 🛡️ Manejo de Errores
+## Manejo de Errores
 
 Todos los errores retornan una estructura uniforme en formato JSON:
 
@@ -236,7 +236,7 @@ Todos los errores retornan una estructura uniforme en formato JSON:
 
 ---
 
-## 🗄️ Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 farma-yopin-api/
