@@ -35,6 +35,9 @@ class ProductoServiceTest {
     @Mock
     private ItemCompraRepository itemCompraRepository;
 
+    @Mock
+    private FileStorageService fileStorageService;
+
     @InjectMocks
     private ProductoService productoService;
 
@@ -160,5 +163,36 @@ class ProductoServiceTest {
         when(productoRepository.existsById(99L)).thenReturn(false);
 
         assertThrows(ResourceNotFoundException.class, () -> productoService.obtenerHistorialComprasProducto(99L));
+    }
+
+    @Test
+    void actualizarImagenProducto_Success() {
+        org.springframework.mock.web.MockMultipartFile file = new org.springframework.mock.web.MockMultipartFile(
+                "file", "foto.png", "image/png", "test".getBytes()
+        );
+
+        when(productoRepository.findById(1L)).thenReturn(Optional.of(producto));
+        when(fileStorageService.getUploadDir()).thenReturn("img");
+        when(fileStorageService.almacenarImagen(file, "producto_1")).thenReturn("img/producto_1_abc.png");
+        when(productoRepository.save(any(Producto.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        ProductoResponse response = productoService.actualizarImagenProducto(1L, file);
+
+        assertNotNull(response);
+        assertEquals("img/producto_1_abc.png", response.getFoto());
+        verify(fileStorageService).almacenarImagen(file, "producto_1");
+    }
+
+    @Test
+    void eliminarImagenProducto_Success() {
+        producto.setFoto("img/antigua.jpg");
+        when(productoRepository.findById(1L)).thenReturn(Optional.of(producto));
+        when(productoRepository.save(any(Producto.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        ProductoResponse response = productoService.eliminarImagenProducto(1L);
+
+        assertNotNull(response);
+        assertNull(response.getFoto());
+        verify(fileStorageService).eliminarImagen("img/antigua.jpg");
     }
 }

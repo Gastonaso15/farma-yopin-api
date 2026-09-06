@@ -6,6 +6,7 @@ import com.farmayopin.api.dto.producto.ProductoRequest;
 import com.farmayopin.api.dto.producto.ProductoResponse;
 import com.farmayopin.api.exception.GlobalExceptionHandler;
 import com.farmayopin.api.exception.ResourceNotFoundException;
+import com.farmayopin.api.service.FileStorageService;
 import com.farmayopin.api.service.ProductoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,6 +36,9 @@ class ProductoControllerTest {
 
     @Mock
     private ProductoService productoService;
+
+    @Mock
+    private FileStorageService fileStorageService;
 
     @InjectMocks
     private ProductoController productoController;
@@ -167,5 +171,59 @@ class ProductoControllerTest {
                 .andExpect(jsonPath("$[0].compraId").value(10L))
                 .andExpect(jsonPath("$[0].cliente").value("Carlos"))
                 .andExpect(jsonPath("$[0].cantidad").value(2));
+    }
+
+    @Test
+    void subirImagenProducto_Returns200() throws Exception {
+        org.springframework.mock.web.MockMultipartFile file = new org.springframework.mock.web.MockMultipartFile(
+                "file", "producto.png", "image/png", "sample bytes".getBytes()
+        );
+
+        ProductoResponse response = ProductoResponse.builder()
+                .id(1L)
+                .nombre("Amoxicilina")
+                .foto("img/producto_1_abc.png")
+                .precio(new BigDecimal("300.00"))
+                .stock(10)
+                .build();
+
+        when(productoService.actualizarImagenProducto(eq(1L), any())).thenReturn(response);
+
+        mockMvc.perform(multipart("/api/productos/1/imagen").file(file))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.foto").value("img/producto_1_abc.png"));
+    }
+
+    @Test
+    void uploadImagenGeneral_Returns200() throws Exception {
+        org.springframework.mock.web.MockMultipartFile file = new org.springframework.mock.web.MockMultipartFile(
+                "file", "general.jpg", "image/jpeg", "image bytes".getBytes()
+        );
+
+        when(fileStorageService.almacenarImagen(any(), eq("upload"))).thenReturn("img/upload_123.jpg");
+
+        mockMvc.perform(multipart("/api/productos/imagenes/upload").file(file))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.rutaRelativa").value("img/upload_123.jpg"))
+                .andExpect(jsonPath("$.mensaje").value("Imagen subida exitosamente."));
+    }
+
+    @Test
+    void eliminarImagenProducto_Returns200() throws Exception {
+        ProductoResponse response = ProductoResponse.builder()
+                .id(1L)
+                .nombre("Amoxicilina")
+                .foto(null)
+                .precio(new BigDecimal("300.00"))
+                .stock(10)
+                .build();
+
+        when(productoService.eliminarImagenProducto(1L)).thenReturn(response);
+
+        mockMvc.perform(delete("/api/productos/1/imagen"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.foto").doesNotExist());
     }
 }

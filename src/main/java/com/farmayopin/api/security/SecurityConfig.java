@@ -45,6 +45,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Public auth endpoints
                         .requestMatchers(HttpMethod.POST, "/api/auth/register", "/api/auth/login").permitAll()
+                        // Static and public image access
+                        .requestMatchers(HttpMethod.GET, "/img/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/productos/*/imagen").permitAll()
                         // Logout
                         .requestMatchers(HttpMethod.POST, "/api/auth/logout").authenticated()
                         // Productos: GET list is accessible to CLIENTE and ADMIN
@@ -54,6 +57,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/productos").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/productos/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/productos/{id}/compras").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/productos/{id}/imagen").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/productos/imagenes/upload").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/productos/{id}/imagen").hasRole("ADMIN")
                         // Carrito: Cliente only
                         .requestMatchers("/api/carrito/**").hasRole("CLIENTE")
                         // Compras: Cliente only

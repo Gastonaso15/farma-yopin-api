@@ -19,10 +19,14 @@ public class ProductoService {
 
     private final ProductoRepository productoRepository;
     private final ItemCompraRepository itemCompraRepository;
+    private final FileStorageService fileStorageService;
 
-    public ProductoService(ProductoRepository productoRepository, ItemCompraRepository itemCompraRepository) {
+    public ProductoService(ProductoRepository productoRepository,
+                           ItemCompraRepository itemCompraRepository,
+                           FileStorageService fileStorageService) {
         this.productoRepository = productoRepository;
         this.itemCompraRepository = itemCompraRepository;
+        this.fileStorageService = fileStorageService;
     }
 
     @Transactional(readOnly = true)
@@ -66,6 +70,37 @@ public class ProductoService {
 
         Producto actualizado = productoRepository.save(producto);
         return mapToProductoResponse(actualizado);
+    }
+
+    @Transactional
+    public ProductoResponse actualizarImagenProducto(Long id, org.springframework.web.multipart.MultipartFile archivo) {
+        Producto producto = productoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Producto no encontrado con id: " + id));
+
+        // Si ya tenía una imagen física guardada localmente, eliminar la anterior
+        if (producto.getFoto() != null && producto.getFoto().startsWith(fileStorageService.getUploadDir())) {
+            fileStorageService.eliminarImagen(producto.getFoto());
+        }
+
+        String rutaRelativa = fileStorageService.almacenarImagen(archivo, "producto_" + id);
+        producto.setFoto(rutaRelativa);
+
+        Producto actualizado = productoRepository.save(producto);
+        return mapToProductoResponse(actualizado);
+    }
+
+    @Transactional
+    public ProductoResponse eliminarImagenProducto(Long id) {
+        Producto producto = productoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Producto no encontrado con id: " + id));
+
+        if (producto.getFoto() != null && !producto.getFoto().trim().isEmpty()) {
+            fileStorageService.eliminarImagen(producto.getFoto());
+            producto.setFoto(null);
+            producto = productoRepository.save(producto);
+        }
+
+        return mapToProductoResponse(producto);
     }
 
     @Transactional(readOnly = true)

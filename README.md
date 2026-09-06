@@ -116,6 +116,11 @@ La API estará disponible en: `http://localhost:8080`
 | `POST` | `/api/productos` | Admin | Crea un nuevo producto en el catálogo. |
 | `PUT` | `/api/productos/{id}` | Admin | Actualiza los datos y stock de un producto. |
 | `GET` | `/api/productos/{id}/compras` | Admin | Consulta el histórico de compras de un producto (ventas realizadas). |
+| `POST` | `/api/productos/{id}/imagen` | Admin | Sube y asocia directamente una imagen al producto, guardándola en `img/` y guardando la ruta relativa en BD. |
+| `POST` | `/api/productos/imagenes/upload` | Admin | Sube una imagen independiente a `img/` y retorna la ruta relativa y URL para uso en creación o edición. |
+| `GET` | `/api/productos/{id}/imagen` | Público / Cliente / Admin | Sirve o descarga el archivo de imagen del producto. |
+| `GET` | `/img/{filename}` | Público / Cliente / Admin | Acceso estático directo al archivo de imagen almacenado en la carpeta `img/`. |
+| `DELETE` | `/api/productos/{id}/imagen` | Admin | Elimina la imagen del producto y remueve el archivo físico de disco. |
 
 #### Ejemplo Crear Producto (`POST /api/productos`):
 ```json
@@ -123,8 +128,35 @@ La API estará disponible en: `http://localhost:8080`
   "nombre": "Ibuprofeno 600mg",
   "precio": 180.50,
   "detalle": "Caja x 20 comprimidos",
-  "foto": "https://servidor/fotos/ibuprofeno.jpg",
+  "foto": "img/producto_1_1725590000.jpg",
   "stock": 50
+}
+```
+
+#### Ejemplo Subir Imagen de Producto (`POST /api/productos/1/imagen`):
+Petición `multipart/form-data` con campo `file`.
+
+**Respuesta (200 OK):**
+```json
+{
+  "id": 1,
+  "nombre": "Ibuprofeno 600mg",
+  "precio": 180.50,
+  "detalle": "Caja x 20 comprimidos",
+  "foto": "img/producto_1_a1b2c3d4_1725590000.jpg",
+  "stock": 50
+}
+```
+
+#### Ejemplo Upload General de Imagen (`POST /api/productos/imagenes/upload`):
+Petición `multipart/form-data` con campo `file`.
+
+**Respuesta (200 OK):**
+```json
+{
+  "rutaRelativa": "img/upload_a1b2c3d4_1725590000.jpg",
+  "url": "http://localhost:8080/img/upload_a1b2c3d4_1725590000.jpg",
+  "mensaje": "Imagen subida exitosamente."
 }
 ```
 
