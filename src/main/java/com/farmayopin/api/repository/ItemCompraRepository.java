@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface ItemCompraRepository extends JpaRepository<ItemCompra, Long> {
     List<ItemCompra> findByProductoIdOrderByCompraFechaDesc(Long productoId);
+
+    boolean existsByProductoId(Long productoId);
 }

@@ -58,6 +58,12 @@ public class ProductoController {
         return ResponseEntity.ok(actualizado);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarProducto(@PathVariable Long id) {
+        productoService.eliminarProducto(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/{id}/compras")
     public ResponseEntity<List<ProductoCompraHistorialResponse>> obtenerHistorialComprasProducto(@PathVariable Long id) {
         List<ProductoCompraHistorialResponse> historial = productoService.obtenerHistorialComprasProducto(id);

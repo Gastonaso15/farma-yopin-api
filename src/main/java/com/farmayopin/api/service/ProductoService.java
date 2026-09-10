@@ -3,6 +3,7 @@ package com.farmayopin.api.service;
 import com.farmayopin.api.dto.producto.ProductoCompraHistorialResponse;
 import com.farmayopin.api.dto.producto.ProductoRequest;
 import com.farmayopin.api.dto.producto.ProductoResponse;
+import com.farmayopin.api.exception.BadRequestException;
 import com.farmayopin.api.exception.ResourceNotFoundException;
 import com.farmayopin.api.model.ItemCompra;
 import com.farmayopin.api.model.Producto;
@@ -70,6 +71,23 @@ public class ProductoService {
 
         Producto actualizado = productoRepository.save(producto);
         return mapToProductoResponse(actualizado);
+    }
+
+    @Transactional
+    public void eliminarProducto(Long id) {
+        Producto producto = productoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Producto no encontrado con id: " + id));
+
+        if (itemCompraRepository.existsByProductoId(id)) {
+            throw new BadRequestException(
+                    "No se puede eliminar el producto: tiene compras registradas en su historial.");
+        }
+
+        if (producto.getFoto() != null && producto.getFoto().startsWith(fileStorageService.getUploadDir())) {
+            fileStorageService.eliminarImagen(producto.getFoto());
+        }
+
+        productoRepository.delete(producto);
     }
 
     @Transactional
