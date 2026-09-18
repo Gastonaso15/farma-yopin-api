@@ -75,7 +75,6 @@ La base de datos contiene los siguientes perfiles de prueba para autenticación 
 | Nombre | Email (Usuario) | Contraseña | Rol | Datos Iniciales |
 |---|---|---|---|---|
 | Gastón Pérez | `gaston@farmayopin.com` | `password123` | `ROLE_CLIENTE` | Carrito activo y 2 compras previas registradas. |
-| Gastón Pérez (Personal) | `gastonaso16@gmail.com` | `password123` | `ROLE_CLIENTE` | Carrito activo listo para compras. |
 | María González | `maria.gonzalez@farmayopin.com` | `password123` | `ROLE_CLIENTE` | Carrito activo y 1 compra previa registrada. |
 | Carlos Rodríguez | `carlos.rodriguez@farmayopin.com` | `password123` | `ROLE_CLIENTE` | Carrito activo para pruebas de compra. |
 | Lucía Martínez | `lucia.martinez@farmayopin.com` | `password123` | `ROLE_CLIENTE` | Perfil de cliente nuevo con carrito vacío. |
