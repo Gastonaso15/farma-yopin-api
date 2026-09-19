@@ -65,6 +65,10 @@ public class SecurityConfig {
                         .requestMatchers("/api/carrito/**").hasRole("CLIENTE")
                         // Compras: Cliente only
                         .requestMatchers(HttpMethod.GET, "/api/compras").hasRole("CLIENTE")
+                        // Direcciones: Cliente y Admin
+                        .requestMatchers("/api/direcciones/**").hasAnyRole("CLIENTE", "ADMIN")
+                        // Tarjetas: Cliente y Admin
+                        .requestMatchers("/api/tarjetas/**").hasAnyRole("CLIENTE", "ADMIN")
                         // Any other request must be authenticated
                         .anyRequest().authenticated()
                 )

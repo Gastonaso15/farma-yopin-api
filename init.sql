@@ -18,6 +18,8 @@ DROP TABLE IF EXISTS `items_compra`;
 DROP TABLE IF EXISTS `items_carrito`;
 DROP TABLE IF EXISTS `compras`;
 DROP TABLE IF EXISTS `carritos`;
+DROP TABLE IF EXISTS `tarjetas`;
+DROP TABLE IF EXISTS `direcciones`;
 DROP TABLE IF EXISTS `productos`;
 DROP TABLE IF EXISTS `usuarios`;
 
@@ -107,6 +109,45 @@ CREATE TABLE `items_compra` (
   CONSTRAINT `fk_items_compra_producto` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- ---------------------------------------------------------------------
+-- 7. TABLA: direcciones
+-- ---------------------------------------------------------------------
+CREATE TABLE `direcciones` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `usuario_id` BIGINT NOT NULL,
+  `alias` VARCHAR(100) NOT NULL,
+  `calle` VARCHAR(200) NOT NULL,
+  `numero` VARCHAR(50) NOT NULL,
+  `piso_depto` VARCHAR(50) DEFAULT NULL,
+  `ciudad` VARCHAR(100) NOT NULL DEFAULT 'Maldonado',
+  `departamento` VARCHAR(100) NOT NULL DEFAULT 'Maldonado',
+  `codigo_postal` VARCHAR(20) NOT NULL DEFAULT '20000',
+  `notas` TEXT DEFAULT NULL,
+  `es_principal` BOOLEAN NOT NULL DEFAULT FALSE,
+  `fecha_creacion` DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`id`),
+  KEY `fk_direcciones_usuario_idx` (`usuario_id`),
+  CONSTRAINT `fk_direcciones_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ---------------------------------------------------------------------
+-- 8. TABLA: tarjetas
+-- ---------------------------------------------------------------------
+CREATE TABLE `tarjetas` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `usuario_id` BIGINT NOT NULL,
+  `tipo` ENUM('CREDITO', 'DEBITO') NOT NULL DEFAULT 'CREDITO',
+  `marca` VARCHAR(50) NOT NULL,
+  `ultimos_cuatro` VARCHAR(4) NOT NULL,
+  `titular` VARCHAR(150) NOT NULL,
+  `vencimiento` VARCHAR(10) NOT NULL,
+  `es_principal` BOOLEAN NOT NULL DEFAULT FALSE,
+  `fecha_creacion` DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`id`),
+  KEY `fk_tarjetas_usuario_idx` (`usuario_id`),
+  CONSTRAINT `fk_tarjetas_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 -- =====================================================================
 -- DATOS DE PRUEBA (SEED DATA)
 -- =====================================================================
@@ -169,3 +210,23 @@ INSERT INTO `items_compra` (`id`, `compra_id`, `producto_id`, `nombre_producto`,
 (3, 2, 8, 'Protector Solar FPS 50+ 200ml', 1, 8900.00, 8900.00),
 (4, 2, 6, 'Alcohol en Gel 70% 500ml', 1, 1950.00, 1950.00),
 (5, 3, 9, 'Complejo Vitamínico B + C', 1, 3400.00, 3400.00);
+
+-- ---------------------------------------------------------------------
+-- SEED: Direcciones de entrega de prueba (Localizadas en Maldonado, Uruguay)
+-- ---------------------------------------------------------------------
+INSERT INTO `direcciones` (`id`, `usuario_id`, `alias`, `calle`, `numero`, `piso_depto`, `ciudad`, `departamento`, `codigo_postal`, `notas`, `es_principal`, `fecha_creacion`) VALUES
+(1, 2, 'Casa (Principal)', 'Calle 25 de Mayo', '742', 'Apto 302', 'Maldonado', 'Maldonado', '20000', 'Timbre 302. Dejar en recepción si no respondo.', TRUE, NOW()),
+(2, 2, 'Trabajo / Oficina', 'Av. Roosevelt y Parada 8', 'Torre del Sol', 'Piso 4, Of. 402', 'Punta del Este', 'Maldonado', '20100', 'Horario comercial 9:00 a 18:00 hs.', FALSE, NOW()),
+(3, 2, 'Casa de mis Padres', 'Calle 18 de Julio', '450', NULL, 'San Carlos', 'Maldonado', '20400', 'Portón blanco de rejas.', FALSE, NOW()),
+(4, 3, 'Casa (Principal)', 'Calle 25 de Mayo', '742', 'Apto 302', 'Maldonado', 'Maldonado', '20000', 'Timbre 302. Dejar en recepción si no respondo.', TRUE, NOW()),
+(5, 3, 'Trabajo / Oficina', 'Av. Roosevelt y Parada 8', 'Torre del Sol', 'Piso 4, Of. 402', 'Punta del Este', 'Maldonado', '20100', 'Horario comercial 9:00 a 18:00 hs.', FALSE, NOW()),
+(6, 3, 'Casa de mis Padres', 'Calle 18 de Julio', '450', NULL, 'San Carlos', 'Maldonado', '20400', 'Portón blanco de rejas.', FALSE, NOW());
+
+-- ---------------------------------------------------------------------
+-- SEED: Tarjetas de pago de prueba (Uruguay)
+-- ---------------------------------------------------------------------
+INSERT INTO `tarjetas` (`id`, `usuario_id`, `tipo`, `marca`, `ultimos_cuatro`, `titular`, `vencimiento`, `es_principal`, `fecha_creacion`) VALUES
+(1, 2, 'CREDITO', 'Visa', '4532', 'GASTON PEREZ', '08/29', TRUE, NOW()),
+(2, 2, 'DEBITO', 'Mastercard', '8819', 'GASTON PEREZ', '11/27', FALSE, NOW()),
+(3, 3, 'CREDITO', 'Visa', '4532', 'GASTON PEREZ', '08/29', TRUE, NOW()),
+(4, 3, 'DEBITO', 'Mastercard', '8819', 'GASTON PEREZ', '11/27', FALSE, NOW());
