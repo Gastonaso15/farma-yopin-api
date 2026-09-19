@@ -50,10 +50,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/productos/*/imagen").permitAll()
                         // Logout
                         .requestMatchers(HttpMethod.POST, "/api/auth/logout").authenticated()
-                        // Productos: GET list is accessible to CLIENTE and ADMIN
-                        .requestMatchers(HttpMethod.GET, "/api/productos").hasAnyRole("CLIENTE", "ADMIN")
+                        // Productos: GET list y detalle son de acceso público
+                        .requestMatchers(HttpMethod.GET, "/api/productos", "/api/productos/{id}").permitAll()
                         // Productos: Admin operations
-                        .requestMatchers(HttpMethod.GET, "/api/productos/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/productos").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/productos/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/productos/{id}").hasRole("ADMIN")
