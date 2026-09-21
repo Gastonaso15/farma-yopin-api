@@ -180,39 +180,39 @@ INSERT INTO `carritos` (`id`, `usuario_id`) VALUES
 -- SEED: Catálogo de Productos con Imágenes Genéricas
 -- ---------------------------------------------------------------------
 INSERT INTO `productos` (`id`, `nombre`, `precio`, `detalle`, `foto`, `stock`) VALUES
-(1, 'Paracetamol 500 mg', 1500.00, 'Caja de 20 comprimidos. Indicado para el alivio sintomático de dolores ocasionales leves o moderados y estados febriles.', 'img/paracetamol.png', 50),
-(2, 'Ibuprofeno 400 mg', 2200.00, 'Caja de 20 cápsulas blandas de rápida absorción. Antiinflamatorio no esteroideo, analgésico y antipirético.', 'img/ibuprofeno.png', 40),
-(3, 'Amoxicilina 500 mg', 3800.00, 'Caja de 16 comprimidos recubiertos. Antibiótico bactericida de amplio espectro para infecciones respiratorias y dentales.', 'img/amoxicilina.png', 25),
-(4, 'Omeprazol 20 mg', 2900.00, 'Caja de 30 cápsulas gastrorresistentes. Inhibidor de la bomba de protones para el reflujo ácido y ardor estomacal.', 'img/omeprazol.png', 35),
-(5, 'Loratadina 10 mg', 1850.00, 'Caja de 10 comprimidos. Antihistamínico para el alivio de rinitis alérgica, urticaria y picazón.', 'img/loratadina.png', 30),
-(6, 'Alcohol en Gel 70% 500ml', 1950.00, 'Frasco dosificador sanitizante de manos con agentes humectantes y glicerina. Elimina el 99.9% de bacterias.', 'img/alcohol_gel.png', 60),
-(7, 'Termómetro Digital Clínico', 4500.00, 'Termómetro con punta flexible y pantalla LCD. Medición precisa en 10 segundos con alarma sonora de fiebre.', 'img/termometro.png', 15),
-(8, 'Protector Solar FPS 50+ 200ml', 8900.00, 'Protección solar muy alta contra rayos UVA y UVB. Fórmula hipoalergénica, resistente al agua y no grasa.', 'img/protector_solar.png', 20),
-(9, 'Complejo Vitamínico B + C', 3400.00, 'Tubo de 60 comprimidos efervescentes sabor naranja. Aporta energía, vitalidad y fortalece el sistema inmune.', 'img/vitaminas.png', 45),
-(10, 'Gasas Estériles y Venda Elástica', 1200.00, 'Set de primeros auxilios: 10 sobres de gasa hidrófila estéril más venda elástica de 5cm x 3m.', 'img/primeros_auxilios.png', 80),
-(11, 'Jarabe para la Tos Infantil 120ml', 3100.00, 'Jarabe expectorante y fluidificante para niños con delicioso sabor a frutilla. Alivia la tos seca y productiva.', 'img/jarabe_tos.png', 22),
-(12, 'Colirio Gotas Oftálmicas 15ml', 2650.00, 'Gotas lubricantes y descongestivas para ojos cansados, secos o irritados por pantallas y polvillo.', 'img/colirio.png', 18);
+(1, 'Paracetamol 500 mg', 150.00, 'Caja de 20 comprimidos. Indicado para el alivio sintomático de dolores ocasionales leves o moderados y estados febriles.', 'img/paracetamol.png', 50),
+(2, 'Ibuprofeno 400 mg', 220.00, 'Caja de 20 cápsulas blandas de rápida absorción. Antiinflamatorio no esteroideo, analgésico y antipirético.', 'img/ibuprofeno.png', 3),
+(3, 'Amoxicilina 500 mg', 380.00, 'Caja de 16 comprimidos recubiertos. Antibiótico bactericida de amplio espectro para infecciones respiratorias y dentales.', 'img/amoxicilina.png', 5),
+(4, 'Omeprazol 20 mg', 290.00, 'Caja de 30 cápsulas gastrorresistentes. Inhibidor de la bomba de protones para el reflujo ácido y ardor estomacal.', 'img/omeprazol.png', 35),
+(5, 'Loratadina 10 mg', 185.00, 'Caja de 10 comprimidos. Antihistamínico para el alivio de rinitis alérgica, urticaria y picazón.', 'img/loratadina.png', 30),
+(6, 'Alcohol en Gel 70% 500ml', 195.00, 'Frasco dosificador sanitizante de manos con agentes humectantes y glicerina. Elimina el 99.9% de bacterias.', 'img/alcohol_gel.png', 60),
+(7, 'Termómetro Digital Clínico', 450.00, 'Termómetro con punta flexible y pantalla LCD. Medición precisa en 10 segundos con alarma sonora de fiebre.', 'img/termometro.png', 15),
+(8, 'Protector Solar FPS 50+ 200ml', 890.00, 'Protección solar muy alta contra rayos UVA y UVB. Fórmula hipoalergénica, resistente al agua y no grasa.', 'img/protector_solar.png', 20),
+(9, 'Complejo Vitamínico B + C', 340.00, 'Tubo de 60 comprimidos efervescentes sabor naranja. Aporta energía, vitalidad y fortalece el sistema inmune.', 'img/vitaminas.png', 45),
+(10, 'Gasas Estériles y Venda Elástica', 120.00, 'Set de primeros auxilios: 10 sobres de gasa hidrófila estéril más venda elástica de 5cm x 3m.', 'img/primeros_auxilios.png', 80),
+(11, 'Jarabe para la Tos Infantil 120ml', 310.00, 'Jarabe expectorante y fluidificante para niños con delicioso sabor a frutilla. Alivia la tos seca y productiva.', 'img/jarabe_tos.png', 22),
+(12, 'Colirio Gotas Oftálmicas 15ml', 265.00, 'Gotas lubricantes y descongestivas para ojos cansados, secos o irritados por pantallas y polvillo.', 'img/colirio.png', 18);
 
 -- ---------------------------------------------------------------------
 -- SEED: Compras de prueba con Historial
 -- ---------------------------------------------------------------------
 INSERT INTO `compras` (`id`, `usuario_id`, `fecha`, `total`) VALUES
-(1, 2, DATE_SUB(NOW(), INTERVAL 3 DAY), 5200.00),
-(2, 2, DATE_SUB(NOW(), INTERVAL 5 HOUR), 10850.00),
-(3, 4, DATE_SUB(NOW(), INTERVAL 1 DAY), 3400.00);
+(1, 2, DATE_SUB(NOW(), INTERVAL 3 DAY), 520.00),
+(2, 2, DATE_SUB(NOW(), INTERVAL 5 HOUR), 1085.00),
+(3, 4, DATE_SUB(NOW(), INTERVAL 1 DAY), 340.00);
 
 -- ---------------------------------------------------------------------
 -- SEED: Ítems de las compras de prueba
 -- ---------------------------------------------------------------------
 INSERT INTO `items_compra` (`id`, `compra_id`, `producto_id`, `nombre_producto`, `cantidad`, `precio_unitario`, `subtotal`) VALUES
-(1, 1, 1, 'Paracetamol 500 mg', 2, 1500.00, 3000.00),
-(2, 1, 2, 'Ibuprofeno 400 mg', 1, 2200.00, 2200.00),
-(3, 2, 8, 'Protector Solar FPS 50+ 200ml', 1, 8900.00, 8900.00),
-(4, 2, 6, 'Alcohol en Gel 70% 500ml', 1, 1950.00, 1950.00),
-(5, 3, 9, 'Complejo Vitamínico B + C', 1, 3400.00, 3400.00);
+(1, 1, 1, 'Paracetamol 500 mg', 2, 150.00, 300.00),
+(2, 1, 2, 'Ibuprofeno 400 mg', 1, 220.00, 220.00),
+(3, 2, 8, 'Protector Solar FPS 50+ 200ml', 1, 890.00, 890.00),
+(4, 2, 6, 'Alcohol en Gel 70% 500ml', 1, 195.00, 195.00),
+(5, 3, 9, 'Complejo Vitamínico B + C', 1, 340.00, 340.00);
 
 -- ---------------------------------------------------------------------
--- SEED: Direcciones de entrega de prueba (Localizadas en Maldonado, Uruguay)
+-- SEED: Direcciones de entrega de prueba 
 -- ---------------------------------------------------------------------
 INSERT INTO `direcciones` (`id`, `usuario_id`, `alias`, `calle`, `numero`, `piso_depto`, `ciudad`, `departamento`, `codigo_postal`, `notas`, `es_principal`, `fecha_creacion`) VALUES
 (1, 2, 'Casa (Principal)', 'Calle 25 de Mayo', '742', 'Apto 302', 'Maldonado', 'Maldonado', '20000', 'Timbre 302. Dejar en recepción si no respondo.', TRUE, NOW()),
@@ -223,7 +223,7 @@ INSERT INTO `direcciones` (`id`, `usuario_id`, `alias`, `calle`, `numero`, `piso
 (6, 3, 'Casa de mis Padres', 'Calle 18 de Julio', '450', NULL, 'San Carlos', 'Maldonado', '20400', 'Portón blanco de rejas.', FALSE, NOW());
 
 -- ---------------------------------------------------------------------
--- SEED: Tarjetas de pago de prueba (Uruguay)
+-- SEED: Tarjetas de pago de prueba
 -- ---------------------------------------------------------------------
 INSERT INTO `tarjetas` (`id`, `usuario_id`, `tipo`, `marca`, `ultimos_cuatro`, `titular`, `vencimiento`, `es_principal`, `fecha_creacion`) VALUES
 (1, 2, 'CREDITO', 'Visa', '4532', 'GASTON PEREZ', '08/29', TRUE, NOW()),
